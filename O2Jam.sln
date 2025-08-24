@@ -8,6 +8,9 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "O2Jam-Bass", "O2Jam-Bass\O2Jam-Bass.vcxproj", "{2CA763E3-FB84-4BEA-87B6-3910A754388F}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "O2Jam-Test", "O2Jam-Test\O2Jam-Test.vcxproj", "{4B832DCD-0D98-478E-A625-9A18A66A3859}"
+	ProjectSection(ProjectDependencies) = postProject
+		{2CA763E3-FB84-4BEA-87B6-3910A754388F} = {2CA763E3-FB84-4BEA-87B6-3910A754388F}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

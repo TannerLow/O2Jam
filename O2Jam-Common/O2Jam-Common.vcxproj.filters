@@ -15,7 +15,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="include\O2\Jam\AudioPlayer.h">
+    <ClInclude Include="include\O2\Jam\StreamPlayer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\O2\Jam\SamplePlayer.h">
