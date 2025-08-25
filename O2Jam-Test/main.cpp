@@ -1,7 +1,24 @@
 #include <O2/Jam/StreamPlayer.h>
+#include <O2/Jam/SamplePlayer.h>
 #include <iostream>
 
+int songDemo();
+int sampleDemo();
+
 int main() {
+	int choice;
+	std::cout << "1 for song demo, 2 for sample demo\n > ";
+	std::cin >> choice;
+	
+	if (choice == 1) {
+		return songDemo();
+	}
+	else if (choice == 2) {
+		return sampleDemo();
+	}
+}
+
+int songDemo() {
 	o2::jam::StreamPlayer songPlayer;
 
 	if (songPlayer.hasDeviceVisibility) {
@@ -54,6 +71,27 @@ int main() {
 
 	std::cout << "Stopping song: " << songPlayer.stop() << std::endl;
 	std::cout << "Playing song: " << songPlayer.play() << std::endl;
+
+	system("pause");
+
+	return 0;
+}
+
+#include <thread>
+#include <chrono>
+
+int sampleDemo() {
+	o2::jam::SamplePlayer samplePlayer;
+
+	// Should use songs with the sample player but im doing so here to show multiple simultaneous playbacks
+	std::cout << "Loaded sample: " << samplePlayer.load(L"resources/example_song.mp3", 2) << std::endl;
+	// careful, volume 1.0 is very loud
+	std::cout << "Adjusting volume: " << samplePlayer.setVolume(0.05f) << std::endl;
+
+	for (int i = 0; i < 3; i++) {
+		std::cout << "Starting sample: " << samplePlayer.play() << std::endl;
+		std::this_thread::sleep_for(std::chrono::milliseconds(2000));
+	}
 
 	system("pause");
 

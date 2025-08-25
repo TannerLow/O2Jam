@@ -1,44 +1,15 @@
 #include <O2/Jam/StreamPlayer.h>
+#include <O2/Jam/_internal/BassHelper.h>
 #include <unordered_map>
 #include <bass/bass.h>
 #include <bass/bass_fx.h>
-#include <O2/Jam/_internal/BassHelper.h>
 #include <sstream>
 
 namespace o2 {
 	namespace jam {
 
-		static std::unordered_map<DWORD, int> deviceUseCount;
-
-		static void tryFreeDevice() {
-			bool shouldFree = true;
-			DWORD device = BASS_GetDevice();
-			if (device != (DWORD)(-1)) {
-				deviceUseCount[device]--;
-				if (deviceUseCount[device] > 0) {
-					// Dont free device if its still in use
-					shouldFree = false;
-				}
-			}
-
-			if (shouldFree and !BASS_Free()) {
-				std::stringstream ss;
-				ss << "Failed to free device (" << ") while destructing StreamPlayer";
-
-				int errorCode = BASS_ErrorGetCode();
-				if (errorCode == BASS_ERROR_INIT) {
-					ss << ", Reason: device not initialized";
-					helper::audioWarning(ss.str());
-				}
-				else {
-					ss << ", Reason: device currently being reinitialized";
-					helper::audioWarning(ss.str());
-				}
-			}
-		}
-
 		struct StreamPlayer::Impl {
-			HSTREAM stream;
+			HSTREAM stream = 0;
 			fs::path currentFile;
 			float volume = -1;
 			int baseFrequency;
@@ -49,7 +20,9 @@ namespace o2 {
 			bool pitchAdjusted = true;
 		};
 
-		StreamPlayer::StreamPlayer() : hasDeviceVisibility(true) {
+		StreamPlayer::StreamPlayer() 
+			: hasDeviceVisibility(true), canRate(true), canPitch(true)
+		{
 			impl = std::make_unique<Impl>();
 
 			// If there isnt a device currently initialized then initialize one
@@ -63,13 +36,17 @@ namespace o2 {
 					helper::audioError("Failed to get ID of newly initialized audio device");
 				}
 				else {
-					deviceUseCount[deviceId]++;
+					helper::deviceUseCount[deviceId]++;
 				}
 			}
 		}
 
 		StreamPlayer::~StreamPlayer() {
-			tryFreeDevice();
+			// free the stream since device may remain if still in use by others
+			if (!unload()) {
+				helper::audioError("Failed to unload audio stream");
+			}
+			helper::tryFreeDevice();
 		}
 
 		bool StreamPlayer::load(const fs::path& filepath) {
@@ -150,10 +127,10 @@ namespace o2 {
 		bool StreamPlayer::unload() {
 			if (impl->stream) {
 				if (isPlaying() and !stop()) {
-					helper::audioWarning("[Error] Failed to stop audio stream.\n");
+					helper::audioWarning("Failed to stop audio stream.\n");
 				}
 				if (!BASS_StreamFree(impl->stream)) {
-					helper::audioError("[Error] Failed to free audio stream.\n");
+					helper::audioError("Failed to free audio stream.\n");
 					return false;
 				}
 				impl->stream = 0;
@@ -356,7 +333,7 @@ namespace o2 {
 			
 				std::optional<DeviceInfo> currentDevice = getCurrentDevice();
 				if (!currentDevice.has_value()) {
-					tryFreeDevice();
+					helper::tryFreeDevice();
 				}
 			
 				if (!BASS_Init(deviceId, 48000, 0, 0, nullptr)) {
@@ -387,7 +364,7 @@ namespace o2 {
 			else {
 				std::optional<DeviceInfo> currentDevice = getCurrentDevice();
 				if (!currentDevice.has_value()) {
-					tryFreeDevice();
+					helper::tryFreeDevice();
 				}
 
 				if (!BASS_Init(deviceId, 48000, 0, 0, nullptr)) {

@@ -23,6 +23,8 @@ namespace o2 {
 
 		public:
 			const bool hasDeviceVisibility;
+			const bool canRate;
+			const bool canPitch;
 
 		public:
 			StreamPlayer();
@@ -34,6 +36,7 @@ namespace o2 {
 			bool stop();
 			bool pause();
 			bool setVolume(float volume);
+			// rate and pitch are complicated and may not be available for all backends, check canRate and canPitch
 			bool applyRate(float rate, bool adjustPitch);
 			float getRate() const;
 			bool seekTo(double timeSeconds);

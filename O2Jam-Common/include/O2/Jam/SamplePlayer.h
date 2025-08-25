@@ -1,6 +1,9 @@
 #pragma once
 #include <memory>
 #include <string>
+#include <filesystem>
+
+namespace fs = std::filesystem;
 
 namespace o2 {
 	namespace jam {
@@ -12,13 +15,13 @@ namespace o2 {
 			std::unique_ptr<Impl> impl;
 
 		public:
-			SamplePlayer() {}
+			SamplePlayer();
 			~SamplePlayer();
 
-			bool load(const std::wstring& filepath, uint8_t maxChannels=1);
+			bool load(const fs::path& filepath, uint8_t maxSimultaneousPlaybacks = 1);
+			bool unload();
 			bool play();
 			bool setVolume(float volume);
-			bool free();
 		};
 
 	} // namespace jam
