@@ -12,6 +12,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "O2Jam-Test", "O2Jam-Test\O2
 		{2CA763E3-FB84-4BEA-87B6-3910A754388F} = {2CA763E3-FB84-4BEA-87B6-3910A754388F}
 	EndProjectSection
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "O2Jam", "O2Jam\O2Jam.vcxproj", "{BE75AF6C-B43C-4EDF-89E9-DCA02FE6811E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -44,6 +46,14 @@ Global
 		{4B832DCD-0D98-478E-A625-9A18A66A3859}.Release|x64.Build.0 = Release|x64
 		{4B832DCD-0D98-478E-A625-9A18A66A3859}.Release|x86.ActiveCfg = Release|Win32
 		{4B832DCD-0D98-478E-A625-9A18A66A3859}.Release|x86.Build.0 = Release|Win32
+		{BE75AF6C-B43C-4EDF-89E9-DCA02FE6811E}.Debug|x64.ActiveCfg = Debug|x64
+		{BE75AF6C-B43C-4EDF-89E9-DCA02FE6811E}.Debug|x64.Build.0 = Debug|x64
+		{BE75AF6C-B43C-4EDF-89E9-DCA02FE6811E}.Debug|x86.ActiveCfg = Debug|Win32
+		{BE75AF6C-B43C-4EDF-89E9-DCA02FE6811E}.Debug|x86.Build.0 = Debug|Win32
+		{BE75AF6C-B43C-4EDF-89E9-DCA02FE6811E}.Release|x64.ActiveCfg = Release|x64
+		{BE75AF6C-B43C-4EDF-89E9-DCA02FE6811E}.Release|x64.Build.0 = Release|x64
+		{BE75AF6C-B43C-4EDF-89E9-DCA02FE6811E}.Release|x86.ActiveCfg = Release|Win32
+		{BE75AF6C-B43C-4EDF-89E9-DCA02FE6811E}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
