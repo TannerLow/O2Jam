@@ -27,7 +27,8 @@ Keep C++ features from spreading. Using one in one place must not force the rest
 ## BASS
 
 The library plays audio with BASS and BASS_FX (`externals/BASS/`). It is built for BASS only; there is no backend abstraction layer.
-- Only `.cpp` files include `<bass/bass.h>` and `<bass/bass_fx.h>`. Public headers expose no BASS types or handles, so programs using the library never see BASS
+- Prefer keeping BASS out of the public headers: only `.cpp` files include `<bass/bass.h>` and `<bass/bass_fx.h>`, and headers use the library's own types. BASS handles are plain 32-bit integers, so this is usually free
+- This is a preference, not a hard rule. If hiding BASS would need a workaround or noticeably more complexity, expose it instead and say so in the pull request
 - `externals/BASS/bass.chm` and `bass_fx.chm` are the BASS documentation
 - The libraries are import libraries: a program needs `bass.dll` and `bass_fx.dll` (from `externals/BASS/lib/x64` or `x86`) next to its executable
 - Windows x64 is the main target; x86 should keep building
@@ -35,10 +36,14 @@ The library plays audio with BASS and BASS_FX (`externals/BASS/`). It is built f
 ## Project layout
 
 Paths are relative to the project folder, `O2Jam/`:
-- Header files go in `include/o2/`
-- Implementation files go in `src/o2/`
-- `include/` is on the include path, so include headers as `#include <o2/name.h>`
+- Header files go in `include/o2/jam/`
+- Implementation files go in `src/o2/jam/`
+- `include/` is on the include path, so include headers as `#include <o2/jam/name.h>`
 - Add new `.cpp` files to `O2Jam.vcxproj` so they get compiled
+
+The `jam/` folders keep O2Jam's files apart from other o2 libraries, such as O2Gui, when one program uses several of them: two `o2/arena.h` files on the include path would silently shadow each other.
+
+Visual Studio names each object file after its `.cpp` file only, so two `.cpp` files with the same name in one project overwrite each other's `.obj`, even in different folders. `O2Jam.vcxproj` sets Object File Name to `$(IntDir)%(RelativeDir)` so object files keep their folders. A program that compiles O2Jam's sources alongside another o2 library's needs the same setting.
 - `main.cpp` is a demo of the library; other projects use only `include/` and `src/`
 
 The `O2Jam-Common`, `O2Jam-Bass` and `O2Jam-Test` projects are an older version of this library. Use them as a reference for how BASS was used, but don't change them or copy their style. They will be removed.
@@ -57,7 +62,7 @@ void setAttributes(
 
 ## Namespaces
 
-Everything in these headers and their implementations goes in the `o2` namespace, so the code can be reused in later projects without name conflicts. Nested namespaces are fine, as long as they start with `o2`, such as `o2::jam`.
+Everything in these headers and their implementations goes in the `o2::jam` namespace, so the code can be reused in later projects without name conflicts, including with other o2 libraries. Nested namespaces are fine, as long as they start with `o2::jam`, such as `o2::jam::arena`.
 
 ## Memory
 
