@@ -160,6 +160,15 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="src\o2\jam\audio.cpp" />
+    <ClCompile Include="src\o2\jam\sample.cpp" />
+    <ClCompile Include="src\o2\jam\stream.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="include\o2\jam\audio.h" />
+    <ClInclude Include="include\o2\jam\sample.h" />
+    <ClInclude Include="include\o2\jam\stream.h" />
+    <ClInclude Include="src\o2\jam\internal.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

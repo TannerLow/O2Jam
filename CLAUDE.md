@@ -40,11 +40,11 @@ Paths are relative to the project folder, `O2Jam/`:
 - Implementation files go in `src/o2/jam/`
 - `include/` is on the include path, so include headers as `#include <o2/jam/name.h>`
 - Add new `.cpp` files to `O2Jam.vcxproj` so they get compiled
+- `main.cpp` is a demo of the library; other projects use only `include/` and `src/`
 
 The `jam/` folders keep O2Jam's files apart from other o2 libraries, such as O2Gui, when one program uses several of them: two `o2/arena.h` files on the include path would silently shadow each other.
 
 Visual Studio names each object file after its `.cpp` file only, so two `.cpp` files with the same name in one project overwrite each other's `.obj`, even in different folders. `O2Jam.vcxproj` sets Object File Name to `$(IntDir)%(RelativeDir)` so object files keep their folders. A program that compiles O2Jam's sources alongside another o2 library's needs the same setting.
-- `main.cpp` is a demo of the library; other projects use only `include/` and `src/`
 
 The `O2Jam-Common`, `O2Jam-Bass` and `O2Jam-Test` projects are an older version of this library. Use them as a reference for how BASS was used, but don't change them or copy their style. They will be removed.
 
