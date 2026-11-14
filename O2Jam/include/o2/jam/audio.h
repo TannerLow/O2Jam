@@ -31,7 +31,7 @@ namespace jam {
         int index;        // pass to init or setDevice
         char name[256];   // the name to show the player, UTF-8
         char driver[256]; // stays the same between runs, unlike index: save this in settings
-        bool isDefault;   // Windows' current default output device
+        bool isDefault;   // Windows' default device: set on the "Default" entry and the device it stands for
         bool isEnabled;   // false when unplugged or disabled; such a device can't be used
     };
 
@@ -52,7 +52,8 @@ namespace jam {
     );
 
     // Switches output to another device. Loaded streams and samples move with
-    // it, and anything playing keeps playing from where it was.
+    // it, and playing streams keep playing from where they were. Sample
+    // playbacks that are going are cut off.
     bool setDevice(int deviceIndex);
 
     // The index of the device in use, or DEFAULT_DEVICE.

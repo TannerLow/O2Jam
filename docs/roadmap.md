@@ -6,7 +6,7 @@ Planned, but left out of the first version to get something working first.
 
 ## Lower latency
 
-The library uses BASS's default buffer sizes. Smaller ones (BASS's update period and device buffer settings) would make sounds start sooner, at the risk of crackling on slow machines. Worth measuring before changing. See [Latency](concepts/latency.md).
+The library uses BASS's default buffer sizes. Smaller ones (BASS's update period and device buffer settings) would make sounds start sooner, at the risk of crackling on slow machines. Turning off a stream's own playback buffer (BASS's `BASS_ATTRIB_BUFFER` set to 0) has the stream produce audio only as the device needs it, which BASS documents as the lowest-latency option. Worth measuring before changing. See [Latency](concepts/latency.md).
 
 Further down: WASAPI exclusive mode or ASIO, through BASS's add-on libraries, which bypass Windows' mixer for the lowest latency possible.
 

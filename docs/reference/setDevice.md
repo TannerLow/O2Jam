@@ -25,7 +25,7 @@ int getDevice();
 
 ## Remarks
 
-Every loaded [stream](Stream.md) and [sample](Sample.md) moves to the new device. Streams keep their position, volume, pan, rate and whether they're playing, so a song carries on from where it was after a short gap. Sample playbacks that are going are moved too.
+Every loaded [stream](Stream.md) and [sample](Sample.md) moves to the new device. Streams keep their position, volume, pan, rate and whether they're playing, so a song carries on from where it was after a short gap. [Samples](Sample.md) move too, but any of their playbacks that are going are cut off: BASS can't move a playback that has already started. Hitsounds are short, so this is rarely heard.
 
 The old device is closed afterwards. [getLatency](getLatency.md) is measured again for the new device.
 

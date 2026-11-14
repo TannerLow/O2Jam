@@ -30,7 +30,7 @@ int listDevices(
 | `index` | The number to pass to [init](init.md) or [setDevice](setDevice.md). Can change between runs. |
 | `name` | The device's name as Windows shows it, for showing to the player. UTF-8, null-terminated, cut off if longer than 255 bytes. |
 | `driver` | An identifier for the device that stays the same between runs. Save this in settings, not `index`. |
-| `isDefault` | Whether this is the device Windows currently uses by default. |
+| `isDefault` | Whether this is Windows' default device. `true` both for the "Default" entry and for the real device it currently stands for. |
 | `isEnabled` | `false` if the device is unplugged or disabled. Such a device is listed, but [init](init.md) and [setDevice](setDevice.md) fail on it. |
 
 ## Parameters
@@ -48,7 +48,7 @@ How many output devices there are, which can be more than `capacity`. Only the f
 
 `listDevices` works before [init](init.md), so a game can offer the choice of device before starting audio.
 
-`DEFAULT_DEVICE` isn't an entry in the list but a choice: the device Windows uses by default, followed automatically when the player changes it in Windows. On Windows, the first entry in the list, named "Default", is the same choice, and [getDevice](setDevice.md) reports it as `DEFAULT_DEVICE`.
+`DEFAULT_DEVICE` isn't an entry in the list but a choice: the device Windows uses by default, followed automatically when the player changes it in Windows. The list includes it as an entry named "Default", the first one, and passing that entry's `index` is the same as passing `DEFAULT_DEVICE`. [getDevice](setDevice.md) reports either as `DEFAULT_DEVICE`.
 
 Listing asks Windows about every device, so don't call it every frame; once when the settings screen opens is enough.
 

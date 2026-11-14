@@ -30,7 +30,7 @@ bool fadeVolume(
 
 Returns immediately; BASS changes the volume as it mixes, so the fade is smooth and nothing needs to be called while it runs. The fade doesn't delay the sound: a stream played at volume 0 and faded in is heard from the start, getting louder.
 
-A new `fadeVolume` replaces a fade in progress, starting from wherever the volume has got to. [setVolume](setVolume.md) and [stop](stop.md) cancel it. The fade runs while the stream plays and waits while it's [paused](pause.md).
+A new `fadeVolume` replaces a fade in progress, starting from wherever the volume has got to. [setVolume](setVolume.md) and [stop](stop.md) cancel it. The fade runs in real time whether the stream is playing, [paused](pause.md) or stopped; it doesn't wait for a paused stream.
 
 ## Example
 

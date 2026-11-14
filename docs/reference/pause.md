@@ -24,7 +24,7 @@ bool pause(Stream* stream);
 
 [play](play.md) resumes from the same position. Volume, pan and rate are kept.
 
-A fade in progress pauses with the stream and continues when it resumes.
+A [fade](fadeVolume.md) in progress carries on while the stream is paused: fades run in real time, whether the stream plays or not.
 
 ## Example
 

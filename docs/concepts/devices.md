@@ -25,7 +25,7 @@ The list includes devices that are unplugged or disabled, with `isEnabled` false
 
 ## The Default device
 
-[DEFAULT_DEVICE](../reference/Device.md) isn't a device, but follows whichever device Windows uses: when the player switches Windows to headphones, the game switches too, without restarting. It's the best choice unless the player picks something else. The first entry in the list, named "Default", is this same choice.
+[DEFAULT_DEVICE](../reference/Device.md) isn't a device, but follows whichever device Windows uses: when the player switches Windows to headphones, the game switches too, without restarting. It's the best choice unless the player picks something else. The first entry in the list, named "Default", is this same choice. Both it and the real device it currently stands for have `isDefault` set.
 
 ## Saving the choice
 
@@ -48,7 +48,7 @@ o2::jam::init(findDevice(settings.audioDevice));
 
 ## Switching devices
 
-[setDevice](../reference/setDevice.md) switches while the game runs. Every loaded [stream](../reference/Stream.md) and [sample](../reference/Sample.md) moves to the new device, and a song that's playing keeps playing from where it was, after a short gap. Switching is too slow to do during gameplay; do it from the settings screen.
+[setDevice](../reference/setDevice.md) switches while the game runs. Every loaded [stream](../reference/Stream.md) and [sample](../reference/Sample.md) moves to the new device, and a song that's playing keeps playing from where it was, after a short gap. Sample playbacks that are going are cut off. Switching is too slow to do during gameplay; do it from the settings screen.
 
 The library keeps the handle of every loaded stream and sample in fixed arrays to be able to move them, which is what limits how many can be loaded at once. See [Memory, limits and threads](memory.md).
 
