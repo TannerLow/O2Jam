@@ -1,6 +1,7 @@
 #include <o2/jam/sample.h>
 #include "internal.h"
 
+#include <assert.h>
 #include <windows.h>
 #include <bass/bass.h>
 
@@ -21,7 +22,16 @@ namespace jam {
         return value;
     }
 
+    // Asserts on misuse; an unloaded sample is allowed and just fails, since
+    // it's what a failed load leaves
+    static void assertValid(const Sample* sample) {
+        assert(sample && "sample is null");
+        assert((sample->handle == 0 || internal::isSampleListed(sample->handle))
+            && "sample isn't zero-initialized, was unloaded through a copy, or outlived shutdown");
+    }
+
     static bool checkLoaded(const Sample* sample) {
+        assertValid(sample);
         if (!sample || sample->handle == 0) {
             internal::setError("The sample isn't loaded");
             return false;
@@ -34,6 +44,9 @@ namespace jam {
         const char* path,
         int maxPlaybacks
     ) {
+        assert(path && "path is null");
+        assert(internal::isStarted() && "load called before init");
+        assert(maxPlaybacks >= 1 && maxPlaybacks <= 65535 && "maxPlaybacks must be from 1 to 65535");
         unload(sample);
         *sample = {};
 
@@ -79,6 +92,7 @@ namespace jam {
     }
 
     void unload(Sample* sample) {
+        assertValid(sample);
         if (!sample || sample->handle == 0) {
             return;
         }
@@ -88,6 +102,7 @@ namespace jam {
     }
 
     bool isLoaded(const Sample* sample) {
+        assertValid(sample);
         return sample && sample->handle != 0;
     }
 
@@ -144,6 +159,7 @@ namespace jam {
     }
 
     float getVolume(const Sample* sample) {
+        assertValid(sample);
         if (!sample || sample->handle == 0) {
             return 0.0f;
         }
@@ -162,6 +178,7 @@ namespace jam {
     }
 
     float getPan(const Sample* sample) {
+        assertValid(sample);
         if (!sample || sample->handle == 0) {
             return 0.0f;
         }

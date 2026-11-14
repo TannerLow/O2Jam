@@ -65,3 +65,15 @@ The demo in `O2Jam/main.cpp` is a longer example: a console program that plays `
 Functions that can fail return `bool`: `true` on success. When one returns `false`, [getErrorMessage](../reference/getErrorMessage.md) says why, for example that a file couldn't be opened or its format isn't supported. Nothing is printed, and the library never ends the program.
 
 Calling a function on a [Stream](../reference/Stream.md) or [Sample](../reference/Sample.md) that isn't loaded returns `false` and does nothing else. Zero-initialize them (`= {}`) so that's always the case before [load](../reference/load.md).
+
+### Asserts
+
+Mistakes in how the library is called, as opposed to things going wrong at run time, stop a Debug build with an `assert`, so they're found where they happen:
+
+- calling [load](../reference/load.md) or [setDevice](../reference/setDevice.md) before [init](../reference/init.md), or `init` twice
+- null pointers, and a null `devices` with a non-zero capacity in [listDevices](../reference/Device.md)
+- a rate outside 0.5 to 2 in [setRate](../reference/setRate.md), or `maxPlaybacks` outside 1 to 65535
+- a Stream or Sample that wasn't zero-initialized, was copied and then unloaded through the copy, or was used after [shutdown](../reference/init.md)
+- loading more than the [limits](../reference/limits.md) allow
+
+In Release builds `assert` is compiled out, and the same calls return `false` with a message from [getErrorMessage](../reference/getErrorMessage.md), as described on each page. Things that can go wrong at run time never assert: a missing file, an unsupported format, an unplugged device, seeking past the end, or calling a function on a stream that isn't loaded, which is what a failed load leaves.

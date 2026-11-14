@@ -27,7 +27,9 @@ Call `init` before any other function except [listDevices](Device.md). It starts
 
 If the chosen device fails, `init` doesn't try another. A game can fall back to `DEFAULT_DEVICE` itself, as in the example.
 
-`shutdown` stops all sound and frees every loaded [stream](Stream.md) and [sample](Sample.md), including the memory BASS holds for them. Stream and Sample structs loaded before are left as they were, with handles that no longer mean anything: don't use them afterwards, except to [load](load.md) into them again after another `init`. [Unloading](unload.md) everything first is cleaner but not needed. `shutdown` does nothing if the library isn't started.
+Calling `init` again without `shutdown` asserts in Debug builds, and returns `false` in Release.
+
+`shutdown` stops all sound and frees every loaded [stream](Stream.md) and [sample](Sample.md), including the memory BASS holds for them. Stream and Sample structs loaded before are left as they were, with handles that no longer mean anything. Don't use them afterwards; to reuse one after another `init`, zero it (`= {}`) first. Using one without zeroing asserts in Debug builds. [Unloading](unload.md) everything first is cleaner but not needed. `shutdown` does nothing if the library isn't started.
 
 ## Example
 

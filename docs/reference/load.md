@@ -43,6 +43,8 @@ Supported formats are MP3, OGG Vorbis, WAV and AIFF, and others Windows has code
 
 Paths longer than 1023 characters fail.
 
+Calling `load` before [init](init.md), with a null `path`, or with `maxPlaybacks` out of range asserts in Debug builds, and returns `false` in Release. So does loading past the [limits](limits.md).
+
 ## Example
 
 ```cpp

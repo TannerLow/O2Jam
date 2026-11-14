@@ -8,6 +8,8 @@ Planned, but left out of the first version to get something working first.
 
 The library uses BASS's default buffer sizes. Smaller ones (BASS's update period and device buffer settings) would make sounds start sooner, at the risk of crackling on slow machines. Turning off a stream's own playback buffer (BASS's `BASS_ATTRIB_BUFFER` set to 0) has the stream produce audio only as the device needs it, which BASS documents as the lowest-latency option. Worth measuring before changing. See [Latency](concepts/latency.md).
 
+With smaller buffers, BASS_FX's time-stretching has to finish within each short mixing step, or every sound on the device skips. Its faster, lower-quality mode (`BASS_ATTRIB_TEMPO_OPTION_USE_QUICKALGO`, which the old O2Jam used) is worth trying then. It saves CPU but doesn't itself lower latency; the library uses full quality for now.
+
 Further down: WASAPI exclusive mode or ASIO, through BASS's add-on libraries, which bypass Windows' mixer for the lowest latency possible.
 
 ## Rate for samples

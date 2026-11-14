@@ -24,7 +24,7 @@ bool setRate(
 
 ## Return value
 
-`true` if set. `false` if `rate` is outside 0.5 to 2, or nothing is loaded; the rate is then unchanged.
+`true` if set. `false` if `rate` is outside 0.5 to 2, or nothing is loaded; the rate is then unchanged. A rate outside 0.5 to 2 also asserts in Debug builds.
 
 ## Remarks
 

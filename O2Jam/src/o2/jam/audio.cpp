@@ -1,6 +1,7 @@
 #include <o2/jam/audio.h>
 #include "internal.h"
 
+#include <assert.h>
 #include <stdio.h>
 #include <string.h>
 #include <windows.h>
@@ -104,6 +105,8 @@ namespace jam {
     }
 
     bool init(int deviceIndex) {
+        assert(!started && "init called twice without shutdown");
+        assert(deviceIndex == DEFAULT_DEVICE || deviceIndex >= 1);
         if (started) {
             internal::setError("The library is already started; call shutdown first");
             return false;
@@ -158,6 +161,8 @@ namespace jam {
         Device* devices,
         int capacity
     ) {
+        assert(capacity >= 0);
+        assert(devices || capacity == 0);
         setUpConfig();
 
         int count = 0;
@@ -178,6 +183,8 @@ namespace jam {
     }
 
     bool setDevice(int deviceIndex) {
+        assert(started && "setDevice called before init");
+        assert(deviceIndex == DEFAULT_DEVICE || deviceIndex >= 1);
         if (!started) {
             internal::setError("The library isn't started; call init first");
             return false;
@@ -321,6 +328,7 @@ namespace internal {
     }
 
     bool addStream(uint32_t handle) {
+        assert(streamCount < O2_JAM_MAX_STREAMS && "too many streams loaded; raise O2_JAM_MAX_STREAMS");
         if (streamCount >= O2_JAM_MAX_STREAMS) {
             char message[96];
             snprintf(message, sizeof(message), "Too many streams loaded (O2_JAM_MAX_STREAMS is %d)", O2_JAM_MAX_STREAMS);
@@ -344,6 +352,7 @@ namespace internal {
     }
 
     bool addSample(uint32_t handle) {
+        assert(sampleCount < O2_JAM_MAX_SAMPLES && "too many samples loaded; raise O2_JAM_MAX_SAMPLES");
         if (sampleCount >= O2_JAM_MAX_SAMPLES) {
             char message[96];
             snprintf(message, sizeof(message), "Too many samples loaded (O2_JAM_MAX_SAMPLES is %d)", O2_JAM_MAX_SAMPLES);
@@ -363,6 +372,24 @@ namespace internal {
                 return;
             }
         }
+    }
+
+    bool isStreamListed(uint32_t handle) {
+        for (int i = 0; i < streamCount; i++) {
+            if (streams[i].handle == handle) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    bool isSampleListed(uint32_t handle) {
+        for (int i = 0; i < sampleCount; i++) {
+            if (samples[i] == handle) {
+                return true;
+            }
+        }
+        return false;
     }
 
     uint32_t getStopSync(uint32_t streamHandle) {

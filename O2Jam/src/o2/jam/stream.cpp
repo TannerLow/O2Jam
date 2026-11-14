@@ -1,6 +1,7 @@
 #include <o2/jam/stream.h>
 #include "internal.h"
 
+#include <assert.h>
 #include <windows.h>
 #include <bass/bass.h>
 #include <bass/bass_fx.h>
@@ -29,7 +30,16 @@ namespace jam {
         return value;
     }
 
+    // Asserts on misuse; an unloaded stream is allowed and just fails, since
+    // it's what a failed load leaves
+    static void assertValid(const Stream* stream) {
+        assert(stream && "stream is null");
+        assert((stream->handle == 0 || internal::isStreamListed(stream->handle))
+            && "stream isn't zero-initialized, was unloaded through a copy, or outlived shutdown");
+    }
+
     static bool checkLoaded(const Stream* stream) {
+        assertValid(stream);
         if (!stream || stream->handle == 0) {
             internal::setError("The stream isn't loaded");
             return false;
@@ -66,6 +76,8 @@ namespace jam {
         Stream* stream,
         const char* path
     ) {
+        assert(path && "path is null");
+        assert(internal::isStarted() && "load called before init");
         unload(stream);
         *stream = {};
 
@@ -124,6 +136,7 @@ namespace jam {
     }
 
     void unload(Stream* stream) {
+        assertValid(stream);
         if (!stream || stream->handle == 0) {
             return;
         }
@@ -133,6 +146,7 @@ namespace jam {
     }
 
     bool isLoaded(const Stream* stream) {
+        assertValid(stream);
         return stream && stream->handle != 0;
     }
 
@@ -192,6 +206,7 @@ namespace jam {
     }
 
     bool isPlaying(const Stream* stream) {
+        assertValid(stream);
         if (!stream || stream->handle == 0) {
             return false;
         }
@@ -206,6 +221,7 @@ namespace jam {
         if (!checkLoaded(stream)) {
             return false;
         }
+        assert(seconds == seconds && "seconds is NaN");
         if (seconds < 0.0 || seconds > stream->length) {
             internal::setError("The position is outside the stream");
             return false;
@@ -220,6 +236,7 @@ namespace jam {
     }
 
     double getPosition(const Stream* stream) {
+        assertValid(stream);
         if (!stream || stream->handle == 0) {
             return -1.0;
         }
@@ -254,6 +271,8 @@ namespace jam {
         if (!checkLoaded(stream)) {
             return false;
         }
+        assert(rate >= MIN_RATE && rate <= MAX_RATE && "rate must be from 0.5 to 2");
+        assert((mode == RateMode::KeepPitch || mode == RateMode::ChangePitch) && "invalid RateMode");
         if (!(rate >= MIN_RATE && rate <= MAX_RATE)) {
             internal::setError("The rate must be from 0.5 to 2");
             return false;
@@ -297,6 +316,7 @@ namespace jam {
     }
 
     float getVolume(const Stream* stream) {
+        assertValid(stream);
         float volume = 0.0f;
         if (stream && stream->handle != 0) {
             BASS_ChannelGetAttribute(stream->handle, BASS_ATTRIB_VOL, &volume);
@@ -319,6 +339,7 @@ namespace jam {
     }
 
     float getPan(const Stream* stream) {
+        assertValid(stream);
         float pan = 0.0f;
         if (stream && stream->handle != 0) {
             BASS_ChannelGetAttribute(stream->handle, BASS_ATTRIB_PAN, &pan);

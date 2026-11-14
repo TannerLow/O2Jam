@@ -37,6 +37,12 @@ namespace internal {
     bool addSample(uint32_t handle);
     void removeSample(uint32_t handle);
 
+    // Whether a handle is in the lists. For asserts: a non-zero handle that
+    // isn't there means the struct wasn't zero-initialized, was copied and
+    // unloaded through the copy, or outlived shutdown.
+    bool isStreamListed(uint32_t handle);
+    bool isSampleListed(uint32_t handle);
+
     // The sync that stops a stream at the end of fadeOutAndStop, or 0. Kept
     // with the stream's handle so setVolume, fadeVolume and stop can cancel it.
     uint32_t getStopSync(uint32_t streamHandle);

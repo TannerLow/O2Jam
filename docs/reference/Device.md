@@ -37,7 +37,7 @@ int listDevices(
 
 | | |
 |---|---|
-| `devices` | An array to fill. Can be null if `capacity` is 0, to only count the devices. |
+| `devices` | An array to fill. Can be null if `capacity` is 0, to only count the devices. Null with a larger `capacity` asserts in Debug builds. |
 | `capacity` | How many Devices fit in `devices`. |
 
 ## Return value

@@ -21,7 +21,7 @@ The library remembers the handle of every loaded stream and sample, so that [set
 | `O2_JAM_MAX_STREAMS` | 64 | Streams loaded at once |
 | `O2_JAM_MAX_SAMPLES` | 4096 | Samples loaded at once, enough for keysounded charts with a sound for every note |
 
-Loading one more fails, and [getErrorMessage](../reference/getErrorMessage.md) says the limit was hit. See [limits](../reference/limits.md) to change them.
+Loading one more asserts in Debug builds; in Release it fails, and [getErrorMessage](../reference/getErrorMessage.md) says the limit was hit. See [limits](../reference/limits.md) to change them.
 
 ## Threads
 

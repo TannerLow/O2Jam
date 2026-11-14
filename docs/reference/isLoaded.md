@@ -25,7 +25,7 @@ bool isLoaded(const Sample* sample);
 
 The same as checking `handle != 0`, but says what's meant.
 
-After [shutdown](init.md), structs that were loaded still report `true`, because the library doesn't know where they are to clear them. Don't use them after shutdown.
+After [shutdown](init.md), structs that were loaded still hold their old handle, because the library doesn't know where they are to clear them. Calling `isLoaded` on one asserts in Debug builds and returns `true` in Release; zero such structs (`= {}`) before using them again.
 
 ## Example
 

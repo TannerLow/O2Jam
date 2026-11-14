@@ -29,6 +29,8 @@ Every loaded [stream](Stream.md) and [sample](Sample.md) moves to the new device
 
 The old device is closed afterwards. [getLatency](getLatency.md) is measured again for the new device.
 
+Calling `setDevice` before [init](init.md) asserts in Debug builds.
+
 Switching takes a moment, so do it from a settings screen, not during gameplay. Switching to the device already in use does nothing and returns `true`.
 
 ## Example
