@@ -29,7 +29,7 @@ The [roadmap](roadmap.md) lists what's planned but not done yet.
 | [Device](reference/Device.md) | An output device; also `listDevices`, `DEFAULT_DEVICE` |
 | [setDevice](reference/setDevice.md) | Switches output to another device, moving everything loaded; also `getDevice` |
 | [getLatency](reference/getLatency.md) | The delay before a played sound is output, as measured by BASS |
-| [setStreamsVolume](reference/setStreamsVolume.md) | The volume of all streams; also `setSamplesVolume` |
+| [setStreamsVolume](reference/setStreamsVolume.md) | The volume of all streams; also `setSamplesVolume`, `getStreamsVolume`, `getSamplesVolume` |
 | [getErrorMessage](reference/getErrorMessage.md) | Why the last call that failed, failed |
 | [Limits](reference/limits.md) | How many streams and samples can be loaded at once |
 
@@ -41,10 +41,13 @@ The [roadmap](roadmap.md) lists what's planned but not done yet.
 | [Sample](reference/Sample.md) | A loaded short sound that can play several times at once |
 | [load](reference/load.md) | Loads a file into a Stream or Sample |
 | [unload](reference/unload.md) | Frees a Stream or Sample |
+| [isLoaded](reference/isLoaded.md) | Whether a file is loaded into a Stream or Sample |
 | [play](reference/play.md) | Plays a stream, or starts a playback of a sample |
 | [stop](reference/stop.md) | Stops a stream and goes back to the start, or stops all playbacks of a sample |
 | [setVolume](reference/setVolume.md) | Sets the volume of a stream or sample |
+| [getVolume](reference/getVolume.md) | Gets the volume of a stream (right now, also mid-fade) or sample |
 | [setPan](reference/setPan.md) | Sets the pan of a stream or sample |
+| [getPan](reference/getPan.md) | Gets the pan of a stream or sample |
 
 ### Streams only (`<o2/jam/stream.h>`)
 

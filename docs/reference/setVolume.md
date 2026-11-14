@@ -23,7 +23,7 @@ bool setVolume(
 | | |
 |---|---|
 | `stream`, `sample` | What to set the volume of. |
-| `volume` | From 0 (silent) to 1 (full: the file as recorded). Values outside are clamped. |
+| `volume` | From 0 (silent) to 1 (the file's own level). Values outside are clamped. |
 
 ## Return value
 
@@ -46,4 +46,4 @@ o2::jam::setVolume(&hit, 0.5f);
 
 ## See also
 
-[setPan](setPan.md), [fadeVolume](fadeVolume.md), [setStreamsVolume](setStreamsVolume.md)
+[getVolume](getVolume.md), [setPan](setPan.md), [fadeVolume](fadeVolume.md), [setStreamsVolume](setStreamsVolume.md)

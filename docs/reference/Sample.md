@@ -28,7 +28,7 @@ struct Sample {
 
 A Sample is a plain struct you own. The decoded sound lives inside BASS until [unload](unload.md).
 
-Read the fields freely, but change them only through the functions. Zero-initialize a Sample (`= {}`) before its first [load](load.md).
+Read the fields freely, but change them only through the functions. Zero-initialize a Sample (`= {}`) before its first [load](load.md). [isLoaded](isLoaded.md) tells whether one is loaded.
 
 Samples always play at normal speed and pitch: a stream's [rate](setRate.md) doesn't affect them.
 

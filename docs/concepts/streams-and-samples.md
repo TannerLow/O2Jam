@@ -35,6 +35,8 @@ Each sample has a volume and pan that [play](../reference/play.md)`(sample)` use
 
 ## Volume
 
-Every volume in the library goes from 0 (silent) to 1 (full). The volume heard is the product of the stream's or sample's own volume and the global volume for streams or samples, set with [setStreamsVolume and setSamplesVolume](../reference/setStreamsVolume.md). These fit the music and effects volume sliders in a game's settings.
+Every volume in the library goes from 0 (silent) to 1, the file's own level: as loud as the file played in a media player at the same Windows volume. Nothing is ever amplified above that, so 1 isn't dangerous, but songs are usually mastered loud, so a game's settings should start lower.
 
-A volume of 1 is the file as recorded, which is usually loud.
+Volumes multiply. The volume heard is the stream's or sample's own volume times the global volume for streams or samples, set with [setStreamsVolume and setSamplesVolume](../reference/setStreamsVolume.md), which fit the music and effects sliders in a game's settings. A stream at 0.75 with the streams volume at 0.25 plays at 0.75 × 0.25 = 0.1875.
+
+These numbers scale the sound wave, and ears don't hear that evenly: 0.5 sounds only a little quieter than 1, and most of a slider's audible change happens near the bottom. Games often square a slider's value before passing it on, so the slider feels even.

@@ -45,4 +45,4 @@ o2::jam::setPan(&clap, -0.3f);
 
 ## See also
 
-[setVolume](setVolume.md), [play](play.md)
+[getPan](getPan.md), [setVolume](setVolume.md), [play](play.md)

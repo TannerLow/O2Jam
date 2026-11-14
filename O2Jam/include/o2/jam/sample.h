@@ -33,6 +33,9 @@ namespace jam {
     // if it isn't loaded.
     void unload(Sample* sample);
 
+    // Whether a file is loaded into sample.
+    bool isLoaded(const Sample* sample);
+
     // Plays the sample from the start, with its own volume and pan.
     bool play(Sample* sample);
 
@@ -47,12 +50,15 @@ namespace jam {
     // Stops every playback of the sample.
     bool stop(Sample* sample);
 
-    // The volume for later plays, from 0 (silent) to 1 (full). Playbacks
-    // already going keep theirs.
+    // The volume for later plays, from 0 (silent) to 1 (the file's own
+    // level). Playbacks already going keep theirs.
     bool setVolume(
         Sample* sample,
         float volume
     );
+
+    // The sample's own volume, as set with setVolume. 0 if it isn't loaded.
+    float getVolume(const Sample* sample);
 
     // The pan for later plays, from -1 (left) through 0 (center) to 1
     // (right). Playbacks already going keep theirs.
@@ -60,6 +66,9 @@ namespace jam {
         Sample* sample,
         float pan
     );
+
+    // The sample's own pan, as set with setPan. 0 if it isn't loaded.
+    float getPan(const Sample* sample);
 
 }
 }

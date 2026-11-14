@@ -44,7 +44,9 @@ struct Stream {
 
 A Stream is a plain struct you own and can put anywhere. It doesn't hold the audio, only its handle and settings; BASS holds the audio. Copying a Stream copies the handle, so both copies refer to the same playing song; keep one.
 
-Read the fields freely, but change them only through the functions, which keep BASS in step. Zero-initialize a Stream (`= {}`) before its first [load](load.md), so functions called on it before loading fail safely.
+Read the fields freely, but change them only through the functions, which keep BASS in step. Zero-initialize a Stream (`= {}`) before its first [load](load.md), so functions called on it before loading fail safely. [isLoaded](isLoaded.md) tells whether one is loaded.
+
+Volume and pan aren't fields, because a [fade](fadeVolume.md) changes the volume over time; [getVolume](getVolume.md) and [getPan](getPan.md) ask BASS for the values right now.
 
 Streams that aren't needed should be [unloaded](unload.md): each keeps its file open and a small buffer.
 

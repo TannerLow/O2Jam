@@ -36,6 +36,9 @@ namespace jam {
     // Stops the stream and closes its file. Does nothing if it isn't loaded.
     void unload(Stream* stream);
 
+    // Whether a file is loaded into stream.
+    bool isLoaded(const Stream* stream);
+
     // Starts or resumes playback from the current position. A stream that
     // played to its end starts again from the beginning.
     bool play(Stream* stream);
@@ -75,17 +78,25 @@ namespace jam {
         RateMode mode
     );
 
-    // Volume from 0 (silent) to 1 (full). Stops a fade in progress.
+    // Volume from 0 (silent) to 1 (the file's own level). Stops a fade in
+    // progress.
     bool setVolume(
         Stream* stream,
         float volume
     );
+
+    // The volume right now, partway through a fade if one is running.
+    // 0 if the stream isn't loaded.
+    float getVolume(const Stream* stream);
 
     // Pan from -1 (left) through 0 (center) to 1 (right).
     bool setPan(
         Stream* stream,
         float pan
     );
+
+    // The pan, from -1 to 1. 0 if the stream isn't loaded.
+    float getPan(const Stream* stream);
 
     // Changes the volume smoothly to volume over seconds, while the stream
     // plays on. Returns immediately.
