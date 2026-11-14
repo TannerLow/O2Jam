@@ -65,7 +65,7 @@ namespace jam {
 
     // Volume of all streams and of all samples, from 0 (silent) to 1 (the
     // files' own level), multiplied with each one's own volume. Both start
-    // at 1.
+    // at 1, and can be set before init.
     void setStreamsVolume(float volume);
     void setSamplesVolume(float volume);
     float getStreamsVolume();

@@ -21,13 +21,13 @@ float getSamplesVolume();
 
 ## Return value
 
-`getStreamsVolume` and `getSamplesVolume`: the volume last set, from 0 to 1. 1 before anything is set.
+`getStreamsVolume` and `getSamplesVolume`: the volume last set, from 0 to 1, whether or not the library is started. 1 before anything is set.
 
 ## Remarks
 
 These multiply with each [stream](Stream.md)'s or [sample](Sample.md)'s own volume: a stream at volume 0.5 with streams volume 0.5 is heard at 0.25. They apply at once, also to sounds that are playing, and fit a game's music and effects volume sliders.
 
-Both start at 1 in [init](init.md), and are kept across [setDevice](setDevice.md). They don't change the Windows volume. Setting them before `init` does nothing.
+Both start at 1 in [init](init.md), and are kept across [setDevice](setDevice.md). They don't change the Windows volume. They can be set before `init`, from the settings file, and take effect when it starts.
 
 1 isn't amplified or dangerous: it's each file's own level, as loud as the same file in a media player at the same Windows volume. Every volume in the library only turns sound down. Songs are usually mastered loud, though, so a game should give its settings a lower starting value, and set these from the settings at startup. See [Volume](../concepts/streams-and-samples.md#volume).
 

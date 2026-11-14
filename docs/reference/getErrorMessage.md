@@ -12,7 +12,7 @@ const char* getErrorMessage();
 
 ## Return value
 
-A short English description, such as `"Can't open the file (BASS error 2)"` or `"Too many samples loaded (O2_JAM_MAX_SAMPLES is 4096)"`. Never null. The string is static: don't free it.
+A short English description, such as `"Can't load the stream (can't open the file, BASS error 2)"` or `"Too many samples loaded (O2_JAM_MAX_SAMPLES is 4096)"`. Never null. The string is static: don't free it.
 
 ## Remarks
 

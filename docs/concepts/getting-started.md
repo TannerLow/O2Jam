@@ -58,7 +58,7 @@ int main() {
 }
 ```
 
-The demo in `O2Jam/main.cpp` is a longer example.
+The demo in `O2Jam/main.cpp` is a longer example: a console program that plays `resources/example_song.mp3` and `resources/example_sample.wav`, with keys for play, pause, stop, seek, looping, double time, nightcore and half time, volume, panned hitsounds, a fading preview, and switching output devices. Run it from the `O2Jam` project folder, which is Visual Studio's default working directory, so it finds `resources/`.
 
 ## Errors
 
